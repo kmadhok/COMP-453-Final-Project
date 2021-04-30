@@ -12,57 +12,28 @@ def load_user(user_id):
 
 
 class User(db.Model, UserMixin):
+    __tablename__ = "User_t"
     __table_args__ = {'extend_existing': True}
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(20), unique=True, nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
-    password = db.Column(db.String(60), nullable=False)
-    posts = db.relationship('Post', backref='author', lazy=True)
+    User_id = db.Column(db.Integer, primary_key=True)
+    Username = db.Column(db.String(25), unique=True, nullable=False)
+    Email = db.Column(db.String(120), unique=True, nullable=False)
+    FirstName = db.Column(db.String(25), nullable=False)
+    LastName = db.Column(db.String(25), nullable=False)
+    AccountType = db.Column(db.String(1), nullable=False)
+    Password = db.Column(db.String(60), nullable=False)
+
+    def get_id(self):
+           return (self.User_id)
 
     def __repr__(self):
-        return f"User('{self.username}', '{self.email}', '{self.image_file}')"
+        return f"User('{self.username}', '{self.email}')"
 
 
-class Post(db.Model):
-     __table_args__ = {'extend_existing': True}
-     id = db.Column(db.Integer, primary_key=True)
-     title = db.Column(db.String(100), nullable=False)
-     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-     content = db.Column(db.Text, nullable=False)
-     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+class Order(db.Model):
+    __table__ = db.Model.metadata.tables['Order_t']
 
-     def __repr__(self):
-         return f"Post('{self.title}', '{self.date_posted}')"
-
-
-
-
-class Dependent(db.Model):
-    __table__ = db.Model.metadata.tables['dependent']
-    
-class Department(db.Model):
-    __table__ = db.Model.metadata.tables['department']
-
-# used for query_factory
-def getDepartment(columns=None):
-    u = Department.query
-    if columns:
-        u = u.options(orm.load_only(*columns))
-    return u
-
-def getDepartmentFactory(columns=None):
-    return partial(getDepartment, columns=columns)
-
-class Dept_Locations(db.Model):
-    __table__ = db.Model.metadata.tables['dept_locations']
-    
-class Employee(db.Model):
-    __table__ = db.Model.metadata.tables['employee']
-class Project(db.Model):
-    __table__ = db.Model.metadata.tables['project']
-class Works_On(db.Model):
-    __table__ = db.Model.metadata.tables['works_on']
+class Review(db.Model):
+    __table__ = db.Model.metadata.tables['Review_t']
 
     
 

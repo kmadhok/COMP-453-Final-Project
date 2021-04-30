@@ -3,8 +3,8 @@ import secrets
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, abort
 from flaskDemo import app, db, bcrypt
-from flaskDemo.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm, DeptForm, DeptUpdateForm, RemoveEmployee, AssignForm
-from flaskDemo.models import User, Post,Department, Dependent, Dept_Locations, Employee, Project, Works_On
+from flaskDemo.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm
+from flaskDemo.models import User, Order, Review
 from flask_login import login_user, current_user, logout_user, login_required
 from datetime import datetime
 
@@ -12,19 +12,7 @@ from datetime import datetime
 @app.route("/")
 @app.route("/home")
 def home():
-    results = Department.query.all()
-    return render_template('dept_home.html', outString = results)
-    posts = Post.query.all()
-    return render_template('home.html', posts=posts)
-    results2 = Faculty.query.join(Qualified,Faculty.facultyID == Qualified.facultyID) \
-               .add_columns(Faculty.facultyID, Faculty.facultyName, Qualified.Datequalified, Qualified.courseID) \
-               .join(Course, Course.courseID == Qualified.courseID).add_columns(Course.courseName)
-    results = Faculty.query.join(Qualified,Faculty.facultyID == Qualified.facultyID) \
-              .add_columns(Faculty.facultyID, Faculty.facultyName, Qualified.Datequalified, Qualified.courseID)
-    return render_template('join.html', title='Join',joined_1_n=results, joined_m_n=results2)
-
-   
-
+    return render_template('home.html', title='Pine Valley')
 
 @app.route("/about")
 def about():
@@ -35,7 +23,9 @@ def reviews():
     return render_template('reviews.html', title="Reviews")
 
 @app.route("/order", methods=['GET'])
+@login_required
 def order():
+
     return render_template('order.html', title="Order")
 
 
@@ -46,7 +36,7 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        user = User(username=form.username.data, email=form.email.data, password=hashed_password)
+        user = User(Username=form.username.data, FirstName=form.firstname.data, LastName=form.lastname.data, Email=form.email.data, Password=hashed_password, AccountType=form.accounttype.data)
         db.session.add(user)
         db.session.commit()
         flash('Your account has been created! You are now able to log in', 'success')
@@ -60,8 +50,8 @@ def login():
         return redirect(url_for('home'))
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).first()
-        if user and bcrypt.check_password_hash(user.password, form.password.data):
+        user = User.query.filter_by(Email=form.email.data).first()
+        if user and bcrypt.check_password_hash(user.Password, form.password.data):
             login_user(user, remember=form.remember.data)
             next_page = request.args.get('next')
             return redirect(next_page) if next_page else redirect(url_for('home'))
