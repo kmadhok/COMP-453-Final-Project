@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block content %}
+    <article class="media content-section">
+        <div class="media-body">
+            <div class="article-metadata">
+                <a class="mr-2" href="#">{{ project[0].pname }} </a>
+                <small class="text-muted">{{ project[0].pno }}</small>
+            </div>
+            <div>
+                {% for emp in project %}
+                    <small class="text-muted">{{ emp.fname }} {{ emp.minit }}. {{ emp.lname }}</small><br>
+                {% endfor %}
+            </div>
+        </div>
+    </article>
+{% endblock content %}

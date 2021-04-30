@@ -12,7 +12,9 @@ CREATE TABLE User_t
 	    	UserType    	VARCHAR(25) 		NOT NULL,
             Password      	VARCHAR(20) 		NOT NULL,              
           	Email       	VARCHAR(30) 		NOT NULL,
-CONSTRAINT User_PK PRIMARY KEY (User_id));
+			Supervisor      NUMERIC(11,0)       NULL,
+CONSTRAINT User_PK PRIMARY KEY (User_id),
+CONSTRAINT USER_t_Supervisor_FK FOREIGN KEY (Supervisor) REFERENCES User_t(User_id));
 
 CREATE TABLE Product_t
          	(Product_id 	NUMERIC(11,0)		NOT NULL,
