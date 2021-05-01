@@ -54,3 +54,137 @@ CREATE TABLE Review_t
 CONSTRAINT REVIEW_t_PK PRIMARY KEY (User_id, Product_id), 	
 CONSTRAINT REVIEW_t_User_id_FK FOREIGN KEY (User_id) REFERENCES User_t(User_id),
 CONSTRAINT REVIEW_t_Product_id_FK FOREIGN KEY (Product_id) REFERENCES Product_t(Product_id));
+										
+
+delete from User_t;
+delete from Product_t;
+delete from Order_t;
+delete from Orderline_t;
+delete from QA_t;
+delete from Review_t;
+
+INSERT INTO User_t  (User_id, Username, FirstName, LastName, AccountType, Password, Email, Supervisor)
+VALUES  (1, 'rLewis', 'Robert', 'Lewis', 'e', 'password123', 'rlewis@gmail.com', '');
+
+INSERT INTO User_t  (User_id, Username, FirstName, LastName, AccountType, Password, Email, Supervisor)
+VALUES  (2, 'dHenny', 'Doug', 'Henny', 'e', 'password123', 'dhenny@gmail.com', '1');
+
+INSERT INTO User_t  (User_id, Username, FirstName, LastName, AccountType, Password, Email, Supervisor)
+VALUES  (3, 'wStrong', 'William', 'Strong', 'e', 'password123', 'wstrong@gmail.com', '1');
+
+INSERT INTO User_t  (User_id, Username, FirstName, LastName, AccountType, Password, Email, Supervisor)
+VALUES  (4, 'jDawson', 'Julie', 'Dawson', 'e', 'password123', 'jdawson@gmail.com', '1');
+
+INSERT INTO User_t  (User_id, Username, FirstName, LastName, AccountType, Password, Email, Supervisor)
+VALUES  (5, 'jWinslow', 'Jacob', 'Winslow', 'e', 'password123', 'jWinslow@gmail.com', '1');
+
+
+
+INSERT INTO User_t  (User_id, Username, FirstName, LastName, AccountType, Password, Email, Supervisor)
+VALUES  (6, 'avgconsumer1', 'Oscar', 'Nunez', 'c', 'password123', 'onunez@dmifflin.com', '');
+
+INSERT INTO User_t  (User_id, Username, FirstName, LastName, AccountType, Password, Email, Supervisor)
+VALUES  (7, 'rHoward', 'Ryan', 'Howard', 'c', 'password123', 'rhoward@dmifflin.com', '');
+
+INSERT INTO User_t  (User_id, Username, FirstName, LastName, AccountType, Password, Email, Supervisor)
+VALUES  (8, 'aMartin', 'Angela', 'Martin', 'c', 'password123', 'amartin@dmifflin.com', '');
+
+INSERT INTO User_t  (User_id, Username, FirstName, LastName, AccountType, Password, Email, Supervisor)
+VALUES  (9, 'mScott', 'Micheal', 'Scott', 'c', 'password123', 'mscott@dmifflin.com', '');
+
+INSERT INTO User_t  (User_id, Username, FirstName, LastName, AccountType, Password, Email, Supervisor)
+VALUES  (10, 'cBratton', 'Creed', 'Bratton', 'c', 'password123', 'cbratton@dmifflin.com', '');
+
+
+
+INSERT INTO Product_t  (Product_id, Price, Description)
+VALUES  (1, 30, 'DWCN Blackout Curtains – Thermal Insulated, Energy Saving & Noise Reducing Bedroom and Living Room Curtains, Black, W 42x L 63 Inch, Set of 2 Rod Pocket Curtain Panels');
+
+INSERT INTO Product_t  (Product_id, Price, Description)
+VALUES  (2, 11, 'Kenney Beckett 5/8" Standard Decorative Window Curtain Rod, 28-48", Black');
+
+INSERT INTO Product_t  (Product_id, Price, Description)
+VALUES  (3, 20, 'Easy-Going Blackout Curtains for Bedroom, Solid Thermal Insulated Grommet and Noise Reduction Window Drapes, Room Darkening Curtains for Living Room, 2 Panels(52x63 in,Gray)');
+
+INSERT INTO Product_t  (Product_id, Price, Description)
+VALUES  (4, 33, 'NICETOWN 100% Blackout Curtains with Black Liners, Thermal Insulated Full Blackout 2-Layer Lined Drapes, Energy Efficiency Window Draperies for Bedroom (Grey, 2 Panels, 52-inch W by 63-inch L)');
+
+INSERT INTO Product_t  (Product_id, Price, Description)
+VALUES  (5, 17, 'Hiasan Blackout Curtains for Bedroom, 42 x 63 Inches Length - Thermal Insulated & Light Blocking Window Curtains for Living Room/Kids Room, 2 Drape Panels Sewn with Tiebacks, Dark Grey');
+
+INSERT INTO Product_t  (Product_id, Price, Description)
+VALUES  (6, 55, 'SHEEROOM 100% Blackout Velvet Curtains for Bedroom and Living Room, 52 x 63 inch Length, Light Grey - Thermal Insulated, Energy Saving, Sun Blocking Grommet Window Drapes, Set of 2 Curtain Panels');
+
+
+
+INSERT INTO Order_t  (User_id, Order_id, Order_date)
+VALUES  (6, 1, '2021-04-05');
+
+INSERT INTO Order_t  (User_id, Order_id, Order_date)
+VALUES  (6, 2, '2021-04-05');
+
+INSERT INTO Order_t  (User_id, Order_id, Order_date)
+VALUES  (8, 3, '2021-04-14');
+
+INSERT INTO Order_t  (User_id, Order_id, Order_date)
+VALUES  (7, 4, '2021-04-18');
+
+
+
+INSERT INTO Orderline_t  (Order_id, Product_id, Quantity)
+VALUES  (1, 3, 1);
+
+INSERT INTO Orderline_t  (Order_id, Product_id, Quantity)
+VALUES  (2, 1, 4);
+
+INSERT INTO Orderline_t  (Order_id, Product_id, Quantity)
+VALUES  (3, 6, 2);
+
+INSERT INTO Orderline_t  (Order_id, Product_id, Quantity)
+VALUES  (4, 5, 2);
+
+
+
+INSERT INTO QA_t  (User_id, Product_id, Rating)
+VALUES  (6, 3, 5);
+
+INSERT INTO QA_t  (User_id, Product_id, Rating)
+VALUES  (6, 1, 4);
+
+INSERT INTO QA_t  (User_id, Product_id, Rating)
+VALUES  (8, 6, 2);
+
+INSERT INTO QA_t  (User_id, Product_id, Rating)
+VALUES  (7, 5, 5);
+
+
+
+INSERT INTO Review_t  (User_id, Product_id, Rating, Review)
+VALUES  (6, 3, 5, 'Very good quality for the price and is 100% blackout.');
+
+INSERT INTO Review_t  (User_id, Product_id, Rating, Review)
+VALUES  (6, 1, 4, 'Quality of my curtains is worth what l payed love them can’t wait to hang them up.');
+
+INSERT INTO Review_t  (User_id, Product_id, Rating, Review)
+VALUES  (8, 6, 2, 'They're good quality although I got the light gray ones and they looked a little greenish not as they pictured them.');
+
+INSERT INTO Review_t  (User_id, Product_id, Rating, Review)
+VALUES  (7, 5, 5, 'I like the fabric, is very soft and tick. It's 100% blackout. The blush color is very elegant and warm. I love this courtain!');
+
+
+
+describe User_t;
+describe Product_t;
+describe Order_t;
+describe Orderline_t;
+describe QA_t;
+describe Review_t;
+
+select * from User_t;
+select * from Product_t;
+select * from Order_t;
+select * from Orderline_t;
+select * from QA_t;
+select * from Review_t;
+
+COMMIT;
