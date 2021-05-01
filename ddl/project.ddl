@@ -63,6 +63,17 @@ delete from Orderline_t;
 delete from QA_t;
 delete from Review_t;
 
+INSERT INTO `User_t` (`User_id`, `Username`, `FirstName`, `LastName`, `AccountType`, `Password`, `Email`, `Supervisor`) VALUES
+(1, 'user1', 'John', 'Smith', 'c', '$2b$12$DucUMxHKXimeJu2ADDS3cOSwg2KRLj6Z1pqurbGmBQ2j.IH.y0gde', 'user1@email.com', NULL),
+(2, 'user2', 'Jane', 'Doe', 'c', '$2b$12$2ML2HvCZ211XuE1glTlYsOOq4ccmpTLELcR4MrvX6MMBZiQ45d78C', 'user2@email.com', NULL),
+(3, 'user3', 'Bob', 'White', 'e', '$2b$12$twO5q.0pPdjrXibtVZ2t/uA0ZETktlB5sM8eku.tAN7ocWozD04Wu', 'user3@email.com', NULL),
+(4, 'user4', 'Renee', 'Rich', 'e', '$2b$12$tEHnRYIkRfhcS6Uk.liELewy5REmR6fvR2SnVP7LvyDuAFKWGlNMG', 'user4@email.com', 3),
+(5, 'user5', 'Nicholas', 'Brooks', 'c', '$2b$12$CHPKXkj7X41LkoOzuzXbSOYHbbMf4e/Jk3LKHvIW4yyIemjuIIJR6', 'user5@email.com', NULL),
+(6, 'user6', 'Paula', 'Ruiz', 'e', '$2b$12$pB97efoaeUxNKhR88lEikuMSPejZhYm3aONMjgEQYK6Nm26cGWTtm', 'user6@email.com', 3),
+(7, 'user7', 'Patricia', 'Woodward', 'c', '$2b$12$dcKhWVfRHVPQvX./v1A92.ClYfPjxNrs0CJ/Mz11KmmxrUccTxZMq', 'user7@email.com', NULL);
+
+
+/*
 INSERT INTO User_t  (User_id, Username, FirstName, LastName, AccountType, Password, Email, Supervisor)
 VALUES  (1, 'rLewis', 'Robert', 'Lewis', 'e', 'password123', 'rlewis@gmail.com', '');
 
@@ -93,7 +104,7 @@ VALUES  (9, 'mScott', 'Micheal', 'Scott', 'c', 'password123', 'mscott@dmifflin.c
 
 INSERT INTO User_t  (User_id, Username, FirstName, LastName, AccountType, Password, Email, Supervisor)
 VALUES  (10, 'cBratton', 'Creed', 'Bratton', 'c', 'password123', 'cbratton@dmifflin.com', '');
-
+*/
 
 INSERT INTO Product_t  (Product_id, Price, Description)
 VALUES  (1, 30, 'DWCN Blackout Curtains – Thermal Insulated, Energy Saving & Noise Reducing Bedroom and Living Room Curtains, Black, W 42x L 63 Inch, Set of 2 Rod Pocket Curtain Panels');
@@ -181,3 +192,13 @@ select * from QA_t;
 select * from Review_t;
 
 COMMIT;
+
+
+INSERT INTO `User_t` (`User_id`, `Username`, `FirstName`, `LastName`, `AccountType`, `Password`, `Email`, `Supervisor`) VALUES
+(1, 'user1', 'John', 'Smith', 'c', '$2b$12$DucUMxHKXimeJu2ADDS3cOSwg2KRLj6Z1pqurbGmBQ2j.IH.y0gde', 'user1@email.com', NULL),
+(2, 'user2', 'Jane', 'Doe', 'c', '$2b$12$2ML2HvCZ211XuE1glTlYsOOq4ccmpTLELcR4MrvX6MMBZiQ45d78C', 'user2@email.com', NULL),
+(3, 'user3', 'Bob', 'White', 'e', '$2b$12$twO5q.0pPdjrXibtVZ2t/uA0ZETktlB5sM8eku.tAN7ocWozD04Wu', 'user3@email.com', NULL),
+(4, 'user4', 'Renee', 'Rich', 'e', '$2b$12$tEHnRYIkRfhcS6Uk.liELewy5REmR6fvR2SnVP7LvyDuAFKWGlNMG', 'user4@email.com', 3),
+(5, 'user5', 'Nicholas', 'Brooks', 'c', '$2b$12$CHPKXkj7X41LkoOzuzXbSOYHbbMf4e/Jk3LKHvIW4yyIemjuIIJR6', 'user5@email.com', NULL),
+(6, 'user6', 'Paula', 'Ruiz', 'e', '$2b$12$pB97efoaeUxNKhR88lEikuMSPejZhYm3aONMjgEQYK6Nm26cGWTtm', 'user6@email.com', 3),
+(7, 'user7', 'Patricia', 'Woodward', 'c', '$2b$12$dcKhWVfRHVPQvX./v1A92.ClYfPjxNrs0CJ/Mz11KmmxrUccTxZMq', 'user7@email.com', NULL);
