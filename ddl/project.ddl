@@ -63,48 +63,16 @@ delete from Orderline_t;
 delete from QA_t;
 delete from Review_t;
 
-INSERT INTO `User_t` (`User_id`, `Username`, `FirstName`, `LastName`, `AccountType`, `Password`, `Email`, `Supervisor`) VALUES
-(1, 'user1', 'John', 'Smith', 'c', '$2b$12$DucUMxHKXimeJu2ADDS3cOSwg2KRLj6Z1pqurbGmBQ2j.IH.y0gde', 'user1@email.com', NULL),
-(2, 'user2', 'Jane', 'Doe', 'c', '$2b$12$2ML2HvCZ211XuE1glTlYsOOq4ccmpTLELcR4MrvX6MMBZiQ45d78C', 'user2@email.com', NULL),
-(3, 'user3', 'Bob', 'White', 'e', '$2b$12$twO5q.0pPdjrXibtVZ2t/uA0ZETktlB5sM8eku.tAN7ocWozD04Wu', 'user3@email.com', NULL),
-(4, 'user4', 'Renee', 'Rich', 'e', '$2b$12$tEHnRYIkRfhcS6Uk.liELewy5REmR6fvR2SnVP7LvyDuAFKWGlNMG', 'user4@email.com', 3),
-(5, 'user5', 'Nicholas', 'Brooks', 'c', '$2b$12$CHPKXkj7X41LkoOzuzXbSOYHbbMf4e/Jk3LKHvIW4yyIemjuIIJR6', 'user5@email.com', NULL),
-(6, 'user6', 'Paula', 'Ruiz', 'e', '$2b$12$pB97efoaeUxNKhR88lEikuMSPejZhYm3aONMjgEQYK6Nm26cGWTtm', 'user6@email.com', 3),
-(7, 'user7', 'Patricia', 'Woodward', 'c', '$2b$12$dcKhWVfRHVPQvX./v1A92.ClYfPjxNrs0CJ/Mz11KmmxrUccTxZMq', 'user7@email.com', NULL);
-
-
-/*
-INSERT INTO User_t  (User_id, Username, FirstName, LastName, AccountType, Password, Email, Supervisor)
-VALUES  (1, 'rLewis', 'Robert', 'Lewis', 'e', 'password123', 'rlewis@gmail.com', '');
-
-INSERT INTO User_t  (User_id, Username, FirstName, LastName, AccountType, Password, Email, Supervisor)
-VALUES  (2, 'dHenny', 'Doug', 'Henny', 'e', 'password123', 'dhenny@gmail.com', '1');
-
-INSERT INTO User_t  (User_id, Username, FirstName, LastName, AccountType, Password, Email, Supervisor)
-VALUES  (3, 'wStrong', 'William', 'Strong', 'e', 'password123', 'wstrong@gmail.com', '1');
-
-INSERT INTO User_t  (User_id, Username, FirstName, LastName, AccountType, Password, Email, Supervisor)
-VALUES  (4, 'jDawson', 'Julie', 'Dawson', 'e', 'password123', 'jdawson@gmail.com', '1');
-
-INSERT INTO User_t  (User_id, Username, FirstName, LastName, AccountType, Password, Email, Supervisor)
-VALUES  (5, 'jWinslow', 'Jacob', 'Winslow', 'e', 'password123', 'jWinslow@gmail.com', '1');
-
-
-INSERT INTO User_t  (User_id, Username, FirstName, LastName, AccountType, Password, Email, Supervisor)
-VALUES  (6, 'avgconsumer1', 'Oscar', 'Nunez', 'c', 'password123', 'onunez@dmifflin.com', '');
-
-INSERT INTO User_t  (User_id, Username, FirstName, LastName, AccountType, Password, Email, Supervisor)
-VALUES  (7, 'rHoward', 'Ryan', 'Howard', 'c', 'password123', 'rhoward@dmifflin.com', '');
-
-INSERT INTO User_t  (User_id, Username, FirstName, LastName, AccountType, Password, Email, Supervisor)
-VALUES  (8, 'aMartin', 'Angela', 'Martin', 'c', 'password123', 'amartin@dmifflin.com', '');
-
-INSERT INTO User_t  (User_id, Username, FirstName, LastName, AccountType, Password, Email, Supervisor)
-VALUES  (9, 'mScott', 'Micheal', 'Scott', 'c', 'password123', 'mscott@dmifflin.com', '');
-
-INSERT INTO User_t  (User_id, Username, FirstName, LastName, AccountType, Password, Email, Supervisor)
-VALUES  (10, 'cBratton', 'Creed', 'Bratton', 'c', 'password123', 'cbratton@dmifflin.com', '');
-*/
+INSERT INTO User_t (User_id, Username, FirstName, LastName, AccountType, `Password`, Email, Supervisor) VALUES(1, 'rLewis', 'Robert', 'Lewis', 'e', '$2b$12$Iw4kCH74YmyA.WwAdGQDTOBcQ3gtfXYHDljTL28MrCXEs9wosjXTS', 'rlewis@gmail.com', NULL);
+INSERT INTO User_t (User_id, Username, FirstName, LastName, AccountType, `Password`, Email, Supervisor) VALUES(2, 'dHenny', 'Doug', 'Henny', 'e', '$2b$12$wWdeWN7lQiirqlM0Sj1Cpe3BHsN7/sEN5C8lbncbCNf4UR.0dExcG', 'dhenny@gmail.com', 1);
+INSERT INTO User_t (User_id, Username, FirstName, LastName, AccountType, `Password`, Email, Supervisor) VALUES(3, 'wStrong', 'William', 'Strong', 'e', '$2b$12$xFAB1bNhKJNOecp/JQYjRuJwUMgCdqOcMVrjt8VV6o5rXskdfdvOS', 'wstrong@gmail.com', 1);
+INSERT INTO User_t (User_id, Username, FirstName, LastName, AccountType, `Password`, Email, Supervisor) VALUES(4, 'jDawson', 'Julie', 'Dawson', 'e', '$2b$12$BInG.bRlz.vSYvVpTYKrTO2INJ.PK6nRJZLKHaFs44moyNOtsvtDK', 'jdawson@gmail.com', 1);
+INSERT INTO User_t (User_id, Username, FirstName, LastName, AccountType, `Password`, Email, Supervisor) VALUES(5, 'jWinslow', 'Jacob', 'Winslow', 'e', '$2b$12$F3vYo6SXjUAnrdlSaL8tS.60xPPzksjE7y69WoWuIJ3WqGqfK.M9C', 'jwinslow@gmail.com', 1);
+INSERT INTO User_t (User_id, Username, FirstName, LastName, AccountType, `Password`, Email, Supervisor) VALUES(6, 'avgconsumer1', 'Oscar', 'Nunez', 'c', '$2b$12$5PozQRmpB/Vfg42fMSfLceQsS7GHPfRpi8dw9vXXyR2X0C6pLRIcS', 'onunez@dmifflin.com', NULL);
+INSERT INTO User_t (User_id, Username, FirstName, LastName, AccountType, `Password`, Email, Supervisor) VALUES(7, 'rHoward', 'Ryan', 'Howard', 'c', '$2b$12$FRrExth50QFloi8EA4hw5.56YTi15jwcVnxvM.zkiWoXMqKXPxaxe', 'rhoward@dmifflin.com', NULL);
+INSERT INTO User_t (User_id, Username, FirstName, LastName, AccountType, `Password`, Email, Supervisor) VALUES(8, 'aMartin', 'Angela', 'Martin', 'c', '$2b$12$Nzl45hco5GYQgEGKYQ/dyeqovH6uA.UeBol0.V0FLobUUz5eyCVH6', 'amartin@dmifflin.com', NULL);
+INSERT INTO User_t (User_id, Username, FirstName, LastName, AccountType, `Password`, Email, Supervisor) VALUES(9, 'mScott', 'Micheal', 'Scott', 'c', '$2b$12$23rYfEjdmfZVDLg/h8P/x.9lkZmdveGwQY1lZRDMfOTznjiWu8Mle', 'mscott@dmifflin.com', NULL);
+INSERT INTO User_t (User_id, Username, FirstName, LastName, AccountType, `Password`, Email, Supervisor) VALUES(10, 'cBratton', 'Creed', 'Bratton', 'c', '$2b$12$t9GZBG90MoZmBxUylSSzaeD3UlGWrblDTtROv3Hvy9nm3uKIB3paK', 'cbratton@dmifflin.com', NULL);
 
 INSERT INTO Product_t  (Product_id, Price, Description)
 VALUES  (1, 30, 'DWCN Blackout Curtains – Thermal Insulated, Energy Saving & Noise Reducing Bedroom and Living Room Curtains, Black, W 42x L 63 Inch, Set of 2 Rod Pocket Curtain Panels');
@@ -171,10 +139,10 @@ INSERT INTO Review_t  (User_id, Product_id, Rating, Review)
 VALUES  (6, 1, 4, 'Quality of my curtains is worth what l payed love them can’t wait to hang them up.');
 
 INSERT INTO Review_t  (User_id, Product_id, Rating, Review)
-VALUES  (8, 6, 2, 'They're good quality although I got the light gray ones and they looked a little greenish not as they pictured them.');
+VALUES  (8, 6, 2, "They're good quality although I got the light gray ones and they looked a little greenish not as they pictured them.");
 
 INSERT INTO Review_t  (User_id, Product_id, Rating, Review)
-VALUES  (7, 5, 5, 'I like the fabric, is very soft and tick. It's 100% blackout. The blush color is very elegant and warm. I love this courtain!');
+VALUES  (7, 5, 5, "I like the fabric, is very soft and tick. It's 100% blackout. The blush color is very elegant and warm. I love this courtain!");
 
 
 describe User_t;
@@ -192,13 +160,3 @@ select * from QA_t;
 select * from Review_t;
 
 COMMIT;
-
-
-INSERT INTO `User_t` (`User_id`, `Username`, `FirstName`, `LastName`, `AccountType`, `Password`, `Email`, `Supervisor`) VALUES
-(1, 'user1', 'John', 'Smith', 'c', '$2b$12$DucUMxHKXimeJu2ADDS3cOSwg2KRLj6Z1pqurbGmBQ2j.IH.y0gde', 'user1@email.com', NULL),
-(2, 'user2', 'Jane', 'Doe', 'c', '$2b$12$2ML2HvCZ211XuE1glTlYsOOq4ccmpTLELcR4MrvX6MMBZiQ45d78C', 'user2@email.com', NULL),
-(3, 'user3', 'Bob', 'White', 'e', '$2b$12$twO5q.0pPdjrXibtVZ2t/uA0ZETktlB5sM8eku.tAN7ocWozD04Wu', 'user3@email.com', NULL),
-(4, 'user4', 'Renee', 'Rich', 'e', '$2b$12$tEHnRYIkRfhcS6Uk.liELewy5REmR6fvR2SnVP7LvyDuAFKWGlNMG', 'user4@email.com', 3),
-(5, 'user5', 'Nicholas', 'Brooks', 'c', '$2b$12$CHPKXkj7X41LkoOzuzXbSOYHbbMf4e/Jk3LKHvIW4yyIemjuIIJR6', 'user5@email.com', NULL),
-(6, 'user6', 'Paula', 'Ruiz', 'e', '$2b$12$pB97efoaeUxNKhR88lEikuMSPejZhYm3aONMjgEQYK6Nm26cGWTtm', 'user6@email.com', 3),
-(7, 'user7', 'Patricia', 'Woodward', 'c', '$2b$12$dcKhWVfRHVPQvX./v1A92.ClYfPjxNrs0CJ/Mz11KmmxrUccTxZMq', 'user7@email.com', NULL);
