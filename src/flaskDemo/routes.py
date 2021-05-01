@@ -4,7 +4,7 @@ from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, abort
 from flaskDemo import app, db, bcrypt
 from flaskDemo.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm
-from flaskDemo.models import User, Order, Review
+from flaskDemo.models import User, Order, Review, Orderline, Product
 from flask_login import login_user, current_user, logout_user, login_required
 from datetime import datetime
 
@@ -12,7 +12,27 @@ from datetime import datetime
 @app.route("/")
 @app.route("/home")
 def home():
-    return render_template('home.html', title='Pine Valley')
+    # Display last 5 most recent purchases
+    ordersQuery = Order.query.with_entities(Order.Order_id).order_by(Order.Order_date.desc()).limit(5)
+    orderIDs = list()
+    for row in ordersQuery.all():
+        rowDict = row._asdict()
+        orderIDs.append(rowDict['Order_id'])
+
+    orderlineQuery = db.session.query(Orderline, Order, Product)\
+        .select_from(Orderline)\
+        .join(Product, Product.Product_id == Orderline.Product_id)\
+        .join(Order, Order.Order_id == Orderline.Order_id)\
+        .with_entities(Product.Product_id, Product.Description, Orderline.Quantity)\
+        .filter(Orderline.Order_id.in_(orderIDs))\
+        .order_by(Order.Order_date.desc())
+
+    products = list()
+    for row in orderlineQuery.all():
+        rowDict = row._asdict()
+        products.append((rowDict['Description'], rowDict['Quantity']))
+        
+    return render_template('home.html', title='Pine Valley', products=products)
 
 @app.route("/about")
 def about():

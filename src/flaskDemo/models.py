@@ -35,6 +35,11 @@ class Order(db.Model):
 class Review(db.Model):
     __table__ = db.Model.metadata.tables['Review_t']
 
+class Product(db.Model):
+    __table__ = db.Model.metadata.tables['Product_t']
+
+class Orderline(db.Model):
+    __table__ = db.Model.metadata.tables['Orderline_t']
     
 
   
