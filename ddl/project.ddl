@@ -79,7 +79,6 @@ INSERT INTO User_t  (User_id, Username, FirstName, LastName, AccountType, Passwo
 VALUES  (5, 'jWinslow', 'Jacob', 'Winslow', 'e', 'password123', 'jWinslow@gmail.com', '1');
 
 
-
 INSERT INTO User_t  (User_id, Username, FirstName, LastName, AccountType, Password, Email, Supervisor)
 VALUES  (6, 'avgconsumer1', 'Oscar', 'Nunez', 'c', 'password123', 'onunez@dmifflin.com', '');
 
@@ -94,7 +93,6 @@ VALUES  (9, 'mScott', 'Micheal', 'Scott', 'c', 'password123', 'mscott@dmifflin.c
 
 INSERT INTO User_t  (User_id, Username, FirstName, LastName, AccountType, Password, Email, Supervisor)
 VALUES  (10, 'cBratton', 'Creed', 'Bratton', 'c', 'password123', 'cbratton@dmifflin.com', '');
-
 
 
 INSERT INTO Product_t  (Product_id, Price, Description)
@@ -116,7 +114,6 @@ INSERT INTO Product_t  (Product_id, Price, Description)
 VALUES  (6, 55, 'SHEEROOM 100% Blackout Velvet Curtains for Bedroom and Living Room, 52 x 63 inch Length, Light Grey - Thermal Insulated, Energy Saving, Sun Blocking Grommet Window Drapes, Set of 2 Curtain Panels');
 
 
-
 INSERT INTO Order_t  (User_id, Order_id, Order_date)
 VALUES  (6, 1, '2021-04-05');
 
@@ -128,7 +125,6 @@ VALUES  (8, 3, '2021-04-14');
 
 INSERT INTO Order_t  (User_id, Order_id, Order_date)
 VALUES  (7, 4, '2021-04-18');
-
 
 
 INSERT INTO Orderline_t  (Order_id, Product_id, Quantity)
@@ -144,7 +140,6 @@ INSERT INTO Orderline_t  (Order_id, Product_id, Quantity)
 VALUES  (4, 5, 2);
 
 
-
 INSERT INTO QA_t  (User_id, Product_id, Rating)
 VALUES  (6, 3, 5);
 
@@ -158,7 +153,6 @@ INSERT INTO QA_t  (User_id, Product_id, Rating)
 VALUES  (7, 5, 5);
 
 
-
 INSERT INTO Review_t  (User_id, Product_id, Rating, Review)
 VALUES  (6, 3, 5, 'Very good quality for the price and is 100% blackout.');
 
@@ -170,7 +164,6 @@ VALUES  (8, 6, 2, 'They're good quality although I got the light gray ones and t
 
 INSERT INTO Review_t  (User_id, Product_id, Rating, Review)
 VALUES  (7, 5, 5, 'I like the fabric, is very soft and tick. It's 100% blackout. The blush color is very elegant and warm. I love this courtain!');
-
 
 
 describe User_t;
