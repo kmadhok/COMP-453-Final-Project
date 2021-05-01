@@ -3,7 +3,7 @@ import secrets
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, abort
 from flaskDemo import app, db, bcrypt
-from flaskDemo.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm
+from flaskDemo.forms import RegistrationForm, LoginForm, UpdateAccountForm, OrderForm
 from flaskDemo.models import User, Order, Review, Orderline, Product
 from flask_login import login_user, current_user, logout_user, login_required
 from datetime import datetime
@@ -42,11 +42,26 @@ def about():
 def reviews():
     return render_template('reviews.html', title="Reviews")
 
-@app.route("/order", methods=['GET'])
+@app.route("/order", methods=['GET', 'POST'])
 @login_required
 def order():
-
-    return render_template('order.html', title="Order")
+    products = Product.query.with_entities(Product.Product_id, Product.Description)
+    selectList = list()
+    for row in products.all():
+        rowDict = row._asdict()
+        selectList.append((rowDict['Product_id'], rowDict['Description']))
+    form = OrderForm()
+    form.product.choices = selectList
+    if form.validate_on_submit():
+        dateOrdered = datetime.utcnow()
+        order = Order(User_id=current_user.User_id, Order_date=dateOrdered)
+        db.session.add(order)
+        db.session.flush()
+        orderline = Orderline(Product_id=form.product.data, Order_id=order.Order_id, Quantity=form.quantity.data)
+        db.session.add(orderline)
+        db.session.commit()
+        return redirect(url_for('home'))
+    return render_template('order.html', title="Order", form=form)
 
 
 @app.route("/register", methods=['GET', 'POST'])

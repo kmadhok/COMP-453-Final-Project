@@ -25,7 +25,7 @@ CONSTRAINT PRODUCT_t_Product_id_PK PRIMARY KEY (Product_id));
 
 CREATE TABLE Order_t
          	(User_id 		int(11)		NOT NULL,
-		    Order_id 		int(11)		NOT NULL,
+		    Order_id 		int(11)		NOT NULL AUTO_INCREMENT,
             Order_date		DATE				NOT NULL,	       	
 CONSTRAINT ORDER_t_Order_id_PK PRIMARY KEY (Order_id),
 CONSTRAINT ORDER_t_User_id_FK FOREIGN KEY (User_id) REFERENCES User_t(User_id));

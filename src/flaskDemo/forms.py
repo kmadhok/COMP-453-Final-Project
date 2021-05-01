@@ -63,6 +63,12 @@ class LoginForm(FlaskForm):
     remember = BooleanField('Remember Me')
     submit = SubmitField('Login')
 
+class OrderForm(FlaskForm):
+    product = SelectField('Product', validators=[DataRequired()])
+
+    quantity = IntegerField('Quantity', validators=[DataRequired()])
+
+    submit = SubmitField('Place Order')
 
 class UpdateAccountForm(FlaskForm):
     username = StringField('Username',
