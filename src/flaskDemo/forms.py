@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from flask_login import current_user
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, IntegerField, DateField, SelectField, HiddenField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, RadioField, IntegerField, DateField, SelectField, HiddenField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError,Regexp
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from flaskDemo import db
@@ -69,6 +69,16 @@ class OrderForm(FlaskForm):
     quantity = IntegerField('Quantity', validators=[DataRequired()])
 
     submit = SubmitField('Place Order')
+
+class QAAssignForm(FlaskForm):
+    employees = SelectField('Employee', coerce=int)
+    productAssign = SelectField('Product', coerce=int)
+    submit = SubmitField('Assign')
+
+class QAForm(FlaskForm):
+    products = SelectField('Product', coerce=int)
+    grade = RadioField('Grade', choices=[('pass','Pass'),('fail','Fail')], validators=[DataRequired()])
+    submit = SubmitField('Grade')
 
 class UpdateAccountForm(FlaskForm):
     username = StringField('Username',

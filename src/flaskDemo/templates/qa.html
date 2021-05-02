@@ -1,0 +1,89 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="content-section">
+    {% if isSupervisor %}
+    <article class="media content-section">
+        <div class="media-body">
+            <div class="article-metadata">	
+                <form method="POST" action="">
+                    {{ aform.hidden_tag() }}
+                    <legend class="border-bottom mb-4">Assign Employee to Product</legend>
+                    <div class="form-group">
+                        {{ aform.employees.label(class="form-control-label") }}
+
+                        {% if aform.employees.errors %}
+                            {{ aform.employees(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in aform.employees.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ aform.employees(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        {{ aform.productAssign.label(class="form-control-label") }}
+
+                        {% if aform.productAssign.errors %}
+                            {{ aform.productAssign(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in aform.productAssign.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ aform.productAssign(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        {{ aform.submit(class="btn btn-outline-info") }}
+                    </div>
+                </form>	  
+            </div>
+        </div>
+    </article>
+    {% endif %}
+    <article class="media content-section">
+        <div class="media-body">
+            <div class="article-metadata">	
+                <form method="POST" action="">
+                    {{ form.hidden_tag() }}
+                    <legend class="border-bottom mb-4">Grade Product</legend>
+                    <div class="form-group">
+                        {{ form.products.label(class="form-control-label") }}
+        
+                        {% if form.products.errors %}
+                            {{ form.products(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.products.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.products(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        {{ form.grade.label(class="form-control-label") }}
+        
+                        {% if form.grade.errors %}
+                            {{ form.grade(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.grade.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.grade(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        {{ form.submit(class="btn btn-outline-info") }}
+                    </div>
+                </form>	  
+            </div>
+        </div>
+    </article>
+</div>
+{% endblock content %}

@@ -41,7 +41,7 @@ CONSTRAINT ORDERLINE_t_Product_id_FK FOREIGN KEY (Product_id) REFERENCES Product
 CREATE TABLE QA_t
          	(User_id 		int(11)		NOT NULL,
             Product_id 	    int(11)		NOT NULL,
-		    Rating 		    NUMERIC(1,0)		NOT NULL,	
+		    Rating 		    varchar(4)		NULL,	
 CONSTRAINT QA_t_PK PRIMARY KEY (User_id, Product_id),       	
 CONSTRAINT QA_t_User_id_FK FOREIGN KEY (User_id) REFERENCES User_t(User_id),
 CONSTRAINT QA_t_Product_id_FK FOREIGN KEY (Product_id) REFERENCES Product_t(Product_id));
@@ -120,16 +120,16 @@ VALUES  (4, 5, 2);
 
 
 INSERT INTO QA_t  (User_id, Product_id, Rating)
-VALUES  (6, 3, 5);
+VALUES  (6, 3, 'pass');
 
 INSERT INTO QA_t  (User_id, Product_id, Rating)
-VALUES  (6, 1, 4);
+VALUES  (6, 1, 'fail');
 
 INSERT INTO QA_t  (User_id, Product_id, Rating)
-VALUES  (8, 6, 2);
+VALUES  (8, 6, 'pass');
 
 INSERT INTO QA_t  (User_id, Product_id, Rating)
-VALUES  (7, 5, 5);
+VALUES  (7, 5, 'pass');
 
 
 INSERT INTO Review_t  (User_id, Product_id, Rating, Review)

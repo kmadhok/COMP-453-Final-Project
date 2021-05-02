@@ -3,8 +3,8 @@ import secrets
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, abort
 from flaskDemo import app, db, bcrypt
-from flaskDemo.forms import RegistrationForm, LoginForm, UpdateAccountForm, OrderForm
-from flaskDemo.models import User, Order, Review, Orderline, Product
+from flaskDemo.forms import RegistrationForm, LoginForm, UpdateAccountForm, OrderForm, QAAssignForm, QAForm
+from flaskDemo.models import User, Order, Review, Orderline, Product, QA
 from flask_login import login_user, current_user, logout_user, login_required
 from datetime import datetime
 
@@ -59,6 +59,71 @@ def order():
         return redirect(url_for('home'))
     return render_template('order.html', title="Order", form=form)
 
+@app.route("/qa", methods=['GET','POST'])
+@login_required
+def qa():
+    isSupervisor = len(User.query.filter_by(Supervisor=current_user.User_id).all()) > 0
+    aform = QAAssignForm()
+    if isSupervisor:
+        employees = User.query.with_entities(User.User_id, User.FirstName, User.LastName).filter_by(Supervisor=current_user.User_id)
+        empList = list()
+        for row in employees.all():
+            rowDict = row._asdict()
+            empList.append((rowDict['User_id'], rowDict['FirstName'] + ' ' + rowDict['LastName']))
+        products = Product.query.with_entities(Product.Product_id, Product.Description)
+        prodlist = list()
+        for row in products.all():
+            rowDict = row._asdict()
+            prodlist.append((rowDict['Product_id'], rowDict['Description']))
+   
+        aform.employees.choices = empList
+        aform.productAssign.choices = prodlist
+
+    products = db.session.query(QA, Product)\
+        .select_from(QA)\
+        .join(Product, Product.Product_id == QA.Product_id)\
+        .with_entities(Product.Product_id, Product.Description)\
+        .filter(QA.User_id==current_user.User_id, QA.Rating==None)
+    reviewList = list()
+    for row in products.all():
+        rowDict = row._asdict()
+        reviewList.append((rowDict['Product_id'], rowDict['Description']))
+    form = QAForm()
+    form.products.choices = reviewList
+    if aform.validate_on_submit():
+        return redirect(url_for('qaAssign', User_id=aform.employees.data, Product_id=aform.productAssign.data))
+    if form.validate_on_submit():
+        return redirect(url_for('qaGrade', User_id=current_user.User_id, Product_id=form.products.data, grade=form.grade.data))
+    return render_template('qa.html', title='Quality Assurance', isSupervisor=isSupervisor, aform=aform, form=form)
+
+@app.route("/qa/assign/<User_id>/<Product_id>", methods=['GET','POST'])
+@login_required
+def qaAssign(User_id, Product_id):
+    qa = QA(User_id=User_id, Product_id=Product_id)
+    db.session.add(qa)
+    db.session.commit()
+    flash('Employee assigned to product successfully', 'success')
+    return redirect(url_for('qa'))
+
+@app.route("/qa/grade/<User_id>/<Product_id>/<grade>", methods=['GET','POST'])
+@login_required
+def qaGrade(User_id, Product_id, grade):
+    failed = False
+    try:
+        qa = QA.query.filter_by(User_id=User_id,Product_id=Product_id).first()
+        qa.Rating = grade
+        db.session.commit()
+    except:
+        db.session.rollback()
+        db.session.flush()
+        failed = True
+    
+    if failed:
+        flash('Failed to grade assignment. Please try again', 'danger')
+        return redirect(url_for('qa'))
+
+    flash('Product graded successfully', 'success')
+    return redirect(url_for('qa'))
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
@@ -90,7 +155,6 @@ def login():
             flash('Login Unsuccessful. Please check email and password', 'danger')
     return render_template('login.html', title='Login', form=form)
 
-
 @app.route("/logout")
 def logout():
     logout_user()
@@ -101,7 +165,7 @@ def logout():
 @login_required
 def account():
     employees = User.query.with_entities(User.User_id, User.FirstName, User.LastName).filter_by(AccountType='e', Supervisor=current_user.User_id)
-    isSupervisor = len(employees.first()) > 0
+    isSupervisor = len(employees.all()) > 0
     selectList = list()
     selectList.append((-1,""))
     if isSupervisor:

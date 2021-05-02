@@ -26,7 +26,7 @@ class User(db.Model, UserMixin):
            return (self.User_id)
 
     def __repr__(self):
-        return f"User('{self.username}', '{self.email}')"
+        return f"User('{self.User_id}', '{self.Email}')"
 
 
 class Order(db.Model):
@@ -40,6 +40,9 @@ class Product(db.Model):
 
 class Orderline(db.Model):
     __table__ = db.Model.metadata.tables['Orderline_t']
+
+class QA(db.Model):
+    __table__ = db.Model.metadata.tables['QA_t']
     
 
   
