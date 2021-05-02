@@ -64,7 +64,7 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Login')
 
 class OrderForm(FlaskForm):
-    product = SelectField('Product', validators=[DataRequired()])
+    product = SelectField('Product', validators=[DataRequired()], coerce=int)
 
     quantity = IntegerField('Quantity', validators=[DataRequired()])
 
