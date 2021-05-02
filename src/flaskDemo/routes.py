@@ -34,10 +34,6 @@ def home():
         
     return render_template('home.html', title='Pine Valley', products=products)
 
-@app.route("/about")
-def about():
-    return render_template('about.html', title='About')
-
 @app.route("/reviews", methods=['GET'])
 def reviews():
     return render_template('reviews.html', title="Reviews")
@@ -101,39 +97,35 @@ def logout():
     return redirect(url_for('home'))
 
 
-def save_picture(form_picture):
-    random_hex = secrets.token_hex(8)
-    _, f_ext = os.path.splitext(form_picture.filename)
-    picture_fn = random_hex + f_ext
-    picture_path = os.path.join(app.root_path, 'static/profile_pics', picture_fn)
-
-    output_size = (125, 125)
-    i = Image.open(form_picture)
-    i.thumbnail(output_size)
-    i.save(picture_path)
-
-    return picture_fn
-
-
 @app.route("/account", methods=['GET', 'POST'])
 @login_required
 def account():
+    employees = User.query.with_entities(User.User_id, User.FirstName, User.LastName).filter_by(AccountType='e', Supervisor=current_user.User_id)
+    isSupervisor = len(employees.first()) > 0
+    selectList = list()
+    selectList.append((-1,""))
+    if isSupervisor:
+        notSupervising = User.query.with_entities(User.User_id, User.FirstName, User.LastName).filter(User.AccountType=='e', User.Supervisor==None, User.User_id!=current_user.User_id)
+        results = notSupervising.all()
+        for row in notSupervising.all():
+            rowDict = row._asdict()
+            selectList.append((rowDict['User_id'], rowDict['FirstName'] + ' ' + rowDict['LastName']))
+     
     form = UpdateAccountForm()
+    form.employees.choices = selectList
     if form.validate_on_submit():
-        if form.picture.data:
-            picture_file = save_picture(form.picture.data)
-            current_user.image_file = picture_file
-        current_user.username = form.username.data
-        current_user.email = form.email.data
+        current_user.Username = form.username.data
+        current_user.Email = form.email.data
+        if int(form.employees.data) != -1:
+            employee = User.query.filter_by(User_id=form.employees.data).first()
+            employee.Supervisor = current_user.User_id
         db.session.commit()
         flash('Your account has been updated!', 'success')
         return redirect(url_for('account'))
     elif request.method == 'GET':
-        form.username.data = current_user.username
-        form.email.data = current_user.email
-    image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
-    return render_template('account.html', title='Account',
-                           image_file=image_file, form=form)
+        form.username.data = current_user.Username
+        form.email.data = current_user.Email
+    return render_template('account.html', title='Account', isSupervisor=isSupervisor, form=form)
 
 
 
