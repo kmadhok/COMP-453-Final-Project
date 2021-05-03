@@ -36,13 +36,14 @@ def home():
 
 @app.route("/reviews", methods=['GET','POST'])
 def reviews():
-    products = Product.query.with_entities(Product.Product_id, Product.Description)
-    selectList = list()
-    for row in products.all():
-        rowDict = row._asdict()
-        selectList.append((rowDict['Product_id'], rowDict['Description']))
+    # Display last 5 most recent reviews
+    # Sort by, recent / highest
+        
+    form = ReviewsForm()
+    if form.validate_on_submit():
     
- 
+        return redirect(url_for('reviews'))
+        
     return render_template('reviews.html', title="Reviews", form=form)
 
 

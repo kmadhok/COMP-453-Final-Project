@@ -1,4 +1,21 @@
 {% extends "layout.html" %}
 {% block content %}
-
+<h2>Reviews by Customers</h2>
+<div class="content-section">
+    <form method="POST" action="">
+        <div class="form-group">
+            {{ form.submit(class="btn btn-outline-info") }}
+        </div>
+    </form>
+</div>
+  {% for row in products %}
+    <article class="media content-section">
+      <div class="media-body">
+        <div class="article-metadata">
+          <p class="mr-2">{{ row[0] }}</p>		  
+          <small class="text-muted">Quantity: {{ row[1] }}</small>		  
+        </div>
+      </div>
+    </article>
+  {% endfor %}
 {% endblock content %}

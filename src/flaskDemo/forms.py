@@ -71,6 +71,9 @@ class OrderForm(FlaskForm):
     submit = SubmitField('Place Order')
     
 class ReviewsForm(FlaskForm):
+    submit = SubmitField('Add a Review')
+       
+class addReviewsForm(FlaskForm):
     product = SelectField('Product', validators=[DataRequired()], coerce=int)
     rating = IntegerField('Rating', validators=[DataRequired()])
     review = StringField('Review', validators=[DataRequired()])
@@ -78,6 +81,7 @@ class ReviewsForm(FlaskForm):
     def validate_rating(self, rating):
         if (rating.data < 1 or rating.data > 5):
             raise ValidationError('Rating must be between 1 and 5')
+           
 
 class QAAssignForm(FlaskForm):
     employees = SelectField('Employee', coerce=int)
