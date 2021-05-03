@@ -3,17 +3,39 @@
 <h2>Reviews by Customers</h2>
 <div class="content-section">
     <form method="POST" action="">
+        {{ form.hidden_tag() }}
         <div class="form-group">
-            {{ form.submit(class="btn btn-outline-info") }}
+            {{ form.addReview(class="btn btn-outline-info") }}
+        </div>
+        <fieldset class="form-group">
+          <div class="form-group">
+              {{ form.filterBy.label(class="form-control-label") }}
+
+              {% if form.filterBy.errors %}
+                  {{ form.filterBy(class="form-control form-control-lg is-invalid") }}
+                  <div class="invalid-feedback">
+                      {% for error in form.filterBy.errors %}
+                          <span>{{ error }}</span>
+                      {% endfor %}
+                  </div>
+              {% else %}
+                  {{ form.filterBy(class="form-control form-control-lg") }}
+              {% endif %}
+          </div>
+        </fieldset>
+        <div class="form-group">
+          {{ form.filterSubmit(class="btn btn-outline-info") }}
         </div>
     </form>
 </div>
-  {% for row in products %}
+  {% for row in reviews %}
     <article class="media content-section">
       <div class="media-body">
         <div class="article-metadata">
           <p class="mr-2">{{ row[0] }}</p>		  
-          <small class="text-muted">Quantity: {{ row[1] }}</small>		  
+          <small class="text-muted">Rating: {{ row[1] }}/5</small><br>
+          <small class="text-muted">{{ row[2] }}</small><br>
+          <small class="text-muted font-italic">Posted: {{ row[3] }}</small>
         </div>
       </div>
     </article>

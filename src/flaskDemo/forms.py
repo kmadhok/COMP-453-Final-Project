@@ -55,7 +55,6 @@ class RegistrationForm(FlaskForm):
         if user:
             raise ValidationError('That email is taken. Please choose a different one.')
 
-
 class LoginForm(FlaskForm):
     email = StringField('Email',
                         validators=[DataRequired(), Email()])
@@ -71,9 +70,12 @@ class OrderForm(FlaskForm):
     submit = SubmitField('Place Order')
     
 class ReviewsForm(FlaskForm):
-    submit = SubmitField('Add a Review')
+    addReview = SubmitField('Add a Review')
+
+    filterBy = SelectField('Filter', coerce=int, choices=[(0,'Most Recent'),(1,'Lowest Rated to Highest'),(2,'Highest Rated to Lowest'),(3,'By Product Name')])
+    filterSubmit = SubmitField('Refresh')
        
-class addReviewsForm(FlaskForm):
+class AddReviewsForm(FlaskForm):
     product = SelectField('Product', validators=[DataRequired()], coerce=int)
     rating = IntegerField('Rating', validators=[DataRequired()])
     review = StringField('Review', validators=[DataRequired()])

@@ -20,31 +20,31 @@
                 {% endif %}
             </div>
             <div class="form-group">
-                {{ form.Review.label(class="form-control-label") }}
+                {{ form.review.label(class="form-control-label") }}
 
-                {% if form.Review.errors %}
-                    {{ form.Review(class="form-control form-control-lg is-invalid") }}
+                {% if form.review.errors %}
+                    {{ form.review(class="form-control form-control-lg is-invalid") }}
                     <div class="invalid-feedback">
-                        {% for error in form.Review.errors %}
+                        {% for error in form.review.errors %}
                             <span>{{ error }}</span>
                         {% endfor %}
                     </div>
                 {% else %}
-                    {{ form.Review(class="form-control form-control-lg") }}
+                    {{ form.review(class="form-control form-control-lg") }}
                 {% endif %}
             </div>
 			<div class="form-group">
-                {{ form.Rating.label(class="form-control-label") }}
+                {{ form.rating.label(class="form-control-label") }}
 
-                {% if form.Rating.errors %}
-                    {{ form.Rating(class="form-control form-control-lg is-invalid") }}
+                {% if form.rating.errors %}
+                    {{ form.rating(class="form-control form-control-lg is-invalid") }}
                     <div class="invalid-feedback">
-                        {% for error in form.Rating.errors %}
+                        {% for error in form.rating.errors %}
                             <span>{{ error }}</span>
                         {% endfor %}
                     </div>
                 {% else %}
-                    {{ form.Rating(class="form-control form-control-lg") }}
+                    {{ form.rating(class="form-control form-control-lg") }}
                 {% endif %}
             </div>
         </fieldset>

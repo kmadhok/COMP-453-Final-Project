@@ -3,7 +3,7 @@ import secrets
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, abort
 from flaskDemo import app, db, bcrypt
-from flaskDemo.forms import RegistrationForm, LoginForm, UpdateAccountForm, OrderForm, QAAssignForm, QAForm, ReviewsForm
+from flaskDemo.forms import RegistrationForm, LoginForm, UpdateAccountForm, OrderForm, QAAssignForm, QAForm, ReviewsForm, AddReviewsForm
 from flaskDemo.models import User, Order, Review, Orderline, Product, QA
 from flask_login import login_user, current_user, logout_user, login_required
 from datetime import datetime
@@ -38,31 +38,93 @@ def home():
 def reviews():
     # Display last 5 most recent reviews
     # Sort by, recent / highest
+    reviewQuery = db.session.query(Review, Product)\
+        .select_from(Review)\
+        .join(Product, Product.Product_id == Review.Product_id)\
+        .with_entities(Product.Description, Review.Rating, Review.Review, Review.Review_date)\
+        .order_by(Review.Review_date.desc())\
+        .limit(10)
+
+    reviews = list()
+    for row in reviewQuery.all():
+        rowDict = row._asdict()
+        reviews.append((rowDict['Description'],rowDict['Rating'],rowDict['Review'],rowDict['Review_date'].strftime("%b %d %Y")))
         
     form = ReviewsForm()
     if form.validate_on_submit():
-    
-        return redirect(url_for('reviews'))
+        if form.addReview.data:
+            return redirect(url_for('addReview'))
+        if form.filterSubmit.data:
+            return redirect(url_for('reviewsFilter',fil=form.filterBy.data))
         
-    return render_template('reviews.html', title="Reviews", form=form)
+    return render_template('reviews.html', title="Reviews", form=form, reviews=reviews)
 
+@app.route("/reviews/filter/<fil>", methods=['GET','POST'])
+def reviewsFilter(fil):
+    reviewQuery = db.session.query(Review, Product)\
+            .select_from(Review)\
+            .join(Product, Product.Product_id == Review.Product_id)\
+            .with_entities(Product.Description, Review.Rating, Review.Review, Review.Review_date)\
+            .order_by(Review.Review_date.desc())
+    if int(fil) == 1:
+        reviewQuery = db.session.query(Review, Product)\
+            .select_from(Review)\
+            .join(Product, Product.Product_id == Review.Product_id)\
+            .with_entities(Product.Description, Review.Rating, Review.Review, Review.Review_date)\
+            .order_by(Review.Rating)
+    elif int(fil) == 2:
+        reviewQuery = db.session.query(Review, Product)\
+            .select_from(Review)\
+            .join(Product, Product.Product_id == Review.Product_id)\
+            .with_entities(Product.Description, Review.Rating, Review.Review, Review.Review_date)\
+            .order_by(Review.Rating.desc())
+    elif int(fil) == 3:
+        reviewQuery = db.session.query(Review, Product)\
+            .select_from(Review)\
+            .join(Product, Product.Product_id == Review.Product_id)\
+            .with_entities(Product.Description, Review.Rating, Review.Review, Review.Review_date)\
+            .order_by(Product.Description)
 
-@app.route("/add-reviews", methods=['GET','POST'])
+    print(reviewQuery)
+    reviews = list()
+    for row in reviewQuery.all():
+        rowDict = row._asdict()
+        reviews.append((rowDict['Description'],rowDict['Rating'],rowDict['Review'],rowDict['Review_date'].strftime("%b %d %Y")))
+        
+    form = ReviewsForm()
+    if form.validate_on_submit():
+        if form.addReview.data:
+            return redirect(url_for('addReview'))
+        if form.filterSubmit.data:
+            return redirect(url_for('reviewsFilter',fil=form.filterBy.data))
+        
+    return render_template('reviews.html', title="Reviews", form=form, reviews=reviews)
+
+@app.route("/add-review", methods=['GET','POST'])
 @login_required
-def addReviews():
+def addReview():
     products = Product.query.with_entities(Product.Product_id, Product.Description)
     selectList = list()
     for row in products.all():
         rowDict = row._asdict()
         selectList.append((rowDict['Product_id'], rowDict['Description']))
-    form = addReviewsForm()
+    form = AddReviewsForm()
     form.product.choices = selectList
     
     if form.validate_on_submit():
-    
+        review = Review(User_id=current_user.User_id,Product_id=form.product.data,Review=form.review.data,Rating=form.rating.data)
+        try:
+            db.session.add(review)
+            db.session.commit()
+        except:
+            db.session.rollback()
+            db.session.flush()
+            flash('Failed to create review. Please try again', 'danger')
+            return redirect(url_for('addReview'))
+        flash('Review successfully created', 'success')
         return redirect(url_for('reviews'))
  
-    return render_template('add_reviews.html', title="Add Reviews", form=form)
+    return render_template('add_review.html', title="Add Review", form=form)
 
 @app.route("/order", methods=['GET', 'POST'])
 @login_required
