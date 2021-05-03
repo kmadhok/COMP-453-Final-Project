@@ -3,7 +3,7 @@ import secrets
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, abort
 from flaskDemo import app, db, bcrypt
-from flaskDemo.forms import RegistrationForm, LoginForm, UpdateAccountForm, OrderForm, QAAssignForm, QAForm
+from flaskDemo.forms import RegistrationForm, LoginForm, UpdateAccountForm, OrderForm, QAAssignForm, QAForm, ReviewsForm
 from flaskDemo.models import User, Order, Review, Orderline, Product, QA
 from flask_login import login_user, current_user, logout_user, login_required
 from datetime import datetime
@@ -34,9 +34,34 @@ def home():
         
     return render_template('home.html', title='Pine Valley', products=products)
 
-@app.route("/reviews", methods=['GET'])
+@app.route("/reviews", methods=['GET','POST'])
 def reviews():
-    return render_template('reviews.html', title="Reviews")
+    products = Product.query.with_entities(Product.Product_id, Product.Description)
+    selectList = list()
+    for row in products.all():
+        rowDict = row._asdict()
+        selectList.append((rowDict['Product_id'], rowDict['Description']))
+    
+ 
+    return render_template('reviews.html', title="Reviews", form=form)
+
+
+@app.route("/add-reviews", methods=['GET','POST'])
+@login_required
+def addReviews():
+    products = Product.query.with_entities(Product.Product_id, Product.Description)
+    selectList = list()
+    for row in products.all():
+        rowDict = row._asdict()
+        selectList.append((rowDict['Product_id'], rowDict['Description']))
+    form = addReviewsForm()
+    form.product.choices = selectList
+    
+    if form.validate_on_submit():
+    
+        return redirect(url_for('reviews'))
+ 
+    return render_template('add_reviews.html', title="Add Reviews", form=form)
 
 @app.route("/order", methods=['GET', 'POST'])
 @login_required

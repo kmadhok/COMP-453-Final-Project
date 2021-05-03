@@ -50,7 +50,8 @@ CREATE TABLE Review_t
          	(User_id 		int(11)		NOT NULL,
 		    Product_id 	    int(11)		NOT NULL,
             Rating 		    NUMERIC(1,0)		NOT NULL,
-	    	Review     	    VARCHAR(250)    	NOT NULL,	      
+	    	Review     	    VARCHAR(250)    	NOT NULL,
+			Review_date		DATE				NOT NULL,
 CONSTRAINT REVIEW_t_PK PRIMARY KEY (User_id, Product_id), 	
 CONSTRAINT REVIEW_t_User_id_FK FOREIGN KEY (User_id) REFERENCES User_t(User_id),
 CONSTRAINT REVIEW_t_Product_id_FK FOREIGN KEY (Product_id) REFERENCES Product_t(Product_id));
@@ -119,30 +120,30 @@ INSERT INTO Orderline_t  (Order_id, Product_id, Quantity)
 VALUES  (4, 5, 2);
 
 
-INSERT INTO QA_t  (User_id, Product_id, Rating)
-VALUES  (6, 3, 'pass');
+INSERT INTO QA_t  (User_id, Product_id)
+VALUES  (2, 3);
 
-INSERT INTO QA_t  (User_id, Product_id, Rating)
-VALUES  (6, 1, 'fail');
+INSERT INTO QA_t  (User_id, Product_id)
+VALUES  (4, 1);
 
-INSERT INTO QA_t  (User_id, Product_id, Rating)
-VALUES  (8, 6, 'pass');
+INSERT INTO QA_t  (User_id, Product_id)
+VALUES  (3, 6);
 
-INSERT INTO QA_t  (User_id, Product_id, Rating)
-VALUES  (7, 5, 'pass');
+INSERT INTO QA_t  (User_id, Product_id)
+VALUES  (5, 5);
 
 
-INSERT INTO Review_t  (User_id, Product_id, Rating, Review)
-VALUES  (6, 3, 5, 'Very good quality for the price and is 100% blackout.');
+INSERT INTO Review_t  (User_id, Product_id, Rating, Review, Review_date)
+VALUES  (6, 3, 5, 'Very good quality for the price and is 100% blackout.', '2021-04-05' );
 
-INSERT INTO Review_t  (User_id, Product_id, Rating, Review)
-VALUES  (6, 1, 4, 'Quality of my curtains is worth what l payed love them can’t wait to hang them up.');
+INSERT INTO Review_t  (User_id, Product_id, Rating, Review, Review_date)
+VALUES  (6, 1, 4, "Quality of my curtains is worth what l payed love them can’t wait to hang them up.", '2021-04-01' );
 
-INSERT INTO Review_t  (User_id, Product_id, Rating, Review)
-VALUES  (8, 6, 2, "They're good quality although I got the light gray ones and they looked a little greenish not as they pictured them.");
+INSERT INTO Review_t  (User_id, Product_id, Rating, Review, Review_date)
+VALUES  (8, 6, 2, "They're good quality although I got the light gray ones and they looked a little greenish not as they pictured them.", '2021-04-12' );
 
-INSERT INTO Review_t  (User_id, Product_id, Rating, Review)
-VALUES  (7, 5, 5, "I like the fabric, is very soft and tick. It's 100% blackout. The blush color is very elegant and warm. I love this courtain!");
+INSERT INTO Review_t  (User_id, Product_id, Rating, Review, Review_date)
+VALUES  (7, 5, 5, "I like the fabric, is very soft and tick. It's 100% blackout. The blush color is very elegant and warm. I love this courtain!", '2021-04-08' );
 
 
 describe User_t;
