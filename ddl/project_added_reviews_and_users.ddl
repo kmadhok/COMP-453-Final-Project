@@ -78,16 +78,16 @@ INSERT INTO User_t (User_id, Username, FirstName, LastName, AccountType, `Passwo
 INSERT INTO User_t (User_id, Username, FirstName, LastName, AccountType, `Password`, Email, Supervisor) VALUES(12, 'tRon', 'Tabitha', 'Ron', 'c', '$asdfas2b$12$t9GZBG90MoZmBxUy', 'tRon@dmifflin.com', NULL);
 INSERT INTO User_t (User_id, Username, FirstName, LastName, AccountType, `Password`, Email, Supervisor) VALUES(13, 'kJohn', 'Kirby', 'John', 'c', '$aasdfdsasdfas2b$12$t9GZBG90MoZmBxUy', 'kJohn@dmifflin.com', NULL);
 INSERT INTO User_t (User_id, Username, FirstName, LastName, AccountType, `Password`, Email, Supervisor) VALUES(14, 'cKelly', 'Chris', 'Kelly', 'c', '$aaasdf#@$2$t9GZBG90MoZmBxUy', 'cKelly@dmifflin.com', NULL);
-INSERT INTO User_t (User_id, Username, FirstName, LastName, AccountType, `Password`, Email, Supervisor) VALUES(15, 'rKelly', 'Rick', 'Kelly', 'c', '$aa$$$$$$$asdf#@$2$t9GZBG90MoZmBxUy', 'rKelly@dmifflin.com', NULL)
-INSERT INTO User_t (User_id, Username, FirstName, LastName, AccountType, `Password`, Email, Supervisor) VALUES(16, 'lKelly', 'Larry', 'Kelly', 'c', '$aa$$&&&$asdf#@$2$t9GZBG90MoZmBxUy', 'lKelly@dmifflin.com', NULL)
-INSERT INTO User_t (User_id, Username, FirstName, LastName, AccountType, `Password`, Email, Supervisor) VALUES(17, 'mMack', 'Mason', 'Mack', 'c', '$$$aaaaa$$asdf#@$2$t9GZBG90MoZmBxUy', 'mMack@dmifflin.com', NULL)
-INSERT INTO User_t (User_id, Username, FirstName, LastName, AccountType, `Password`, Email, Supervisor) VALUES(18, 'tRack', 'Tyrone', 'Rack', 'c', '$abababa$$$$$$$asdf#@$2$t9GZBG90MoZmBxUy', 'tRack@dmifflin.com', NULL)
-INSERT INTO User_t (User_id, Username, FirstName, LastName, AccountType, `Password`, Email, Supervisor) VALUES(19, 'bBilly', 'Bob', 'Billy', 'c', '$aa$$$$000#@$2$t9GZBG90MoZmBxUy', 'bBilly@dmifflin.com', NULL)
-INSERT INTO User_t (User_id, Username, FirstName, LastName, AccountType, `Password`, Email, Supervisor) VALUES(20, 'bRack', 'Brandon', 'Rack', 'c', 'pppppp#@$2$t9GZBG90MoZmBxUy', 'bRack@dmifflin.com', NULL)
-INSERT INTO User_t (User_id, Username, FirstName, LastName, AccountType, `Password`, Email, Supervisor) VALUES(21, 'pPod', 'Perry', 'Pod', 'c', '$$$$tttttasdf#@$2$t9GZBG90MoZmBxUy', 'pPod@dmifflin.com', NULL)
-INSERT INTO User_t (User_id, Username, FirstName, LastName, AccountType, `Password`, Email, Supervisor) VALUES(22, 'hHone', 'Heather', 'Hone', 'c', '$ppp$$f#@$2$t9GZBG90MoZmBxUy', 'hHone@dmifflin.com', NULL)
-INSERT INTO User_t (User_id, Username, FirstName, LastName, AccountType, `Password`, Email, Supervisor) VALUES(23, 'lRay', 'Lana', 'Ray', 'c', '$abab###df#@$2$t9GZBG90MoZmBxUy', 'lRay@dmifflin.com', NULL)
-INSERT INTO User_t (User_id, Username, FirstName, LastName, AccountType, `Password`, Email, Supervisor) VALUES(24, 'aMarge', 'Ashley', 'marge', 'c', '$aa$$$999$2$t9GZBG90MoZmBxUy', 'aMarge@dmifflin.com', NULL)
+INSERT INTO User_t (User_id, Username, FirstName, LastName, AccountType, `Password`, Email, Supervisor) VALUES(15, 'rKelly', 'Rick', 'Kelly', 'c', '$aa$$$$$$$asdf#@$2$t9GZBG90MoZmBxUy', 'rKelly@dmifflin.com', NULL);
+INSERT INTO User_t (User_id, Username, FirstName, LastName, AccountType, `Password`, Email, Supervisor) VALUES(16, 'lKelly', 'Larry', 'Kelly', 'c', '$aa$$&&&$asdf#@$2$t9GZBG90MoZmBxUy', 'lKelly@dmifflin.com', NULL);
+INSERT INTO User_t (User_id, Username, FirstName, LastName, AccountType, `Password`, Email, Supervisor) VALUES(17, 'mMack', 'Mason', 'Mack', 'c', '$$$aaaaa$$asdf#@$2$t9GZBG90MoZmBxUy', 'mMack@dmifflin.com', NULL);
+INSERT INTO User_t (User_id, Username, FirstName, LastName, AccountType, `Password`, Email, Supervisor) VALUES(18, 'tRack', 'Tyrone', 'Rack', 'c', '$abababa$$$$$$$asdf#@$2$t9GZBG90MoZmBxUy', 'tRack@dmifflin.com', NULL);
+INSERT INTO User_t (User_id, Username, FirstName, LastName, AccountType, `Password`, Email, Supervisor) VALUES(19, 'bBilly', 'Bob', 'Billy', 'c', '$aa$$$$000#@$2$t9GZBG90MoZmBxUy', 'bBilly@dmifflin.com', NULL);
+INSERT INTO User_t (User_id, Username, FirstName, LastName, AccountType, `Password`, Email, Supervisor) VALUES(20, 'bRack', 'Brandon', 'Rack', 'c', 'pppppp#@$2$t9GZBG90MoZmBxUy', 'bRack@dmifflin.com', NULL);
+INSERT INTO User_t (User_id, Username, FirstName, LastName, AccountType, `Password`, Email, Supervisor) VALUES(21, 'pPod', 'Perry', 'Pod', 'c', '$$$$tttttasdf#@$2$t9GZBG90MoZmBxUy', 'pPod@dmifflin.com', NULL);
+INSERT INTO User_t (User_id, Username, FirstName, LastName, AccountType, `Password`, Email, Supervisor) VALUES(22, 'hHone', 'Heather', 'Hone', 'c', '$ppp$$f#@$2$t9GZBG90MoZmBxUy', 'hHone@dmifflin.com', NULL);
+INSERT INTO User_t (User_id, Username, FirstName, LastName, AccountType, `Password`, Email, Supervisor) VALUES(23, 'lRay', 'Lana', 'Ray', 'c', '$abab###df#@$2$t9GZBG90MoZmBxUy', 'lRay@dmifflin.com', NULL);
+INSERT INTO User_t (User_id, Username, FirstName, LastName, AccountType, `Password`, Email, Supervisor) VALUES(24, 'aMarge', 'Ashley', 'marge', 'c', '$aa$$$999$2$t9GZBG90MoZmBxUy', 'aMarge@dmifflin.com', NULL);
 
 
 INSERT INTO Product_t  (Product_id, Price, Description)
