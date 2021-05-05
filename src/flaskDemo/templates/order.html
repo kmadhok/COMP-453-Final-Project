@@ -2,6 +2,12 @@
 {% block content %}
 <div class="content-section">
     <form method="POST" action="">
+        <div class="form-group">
+            {{ oform.hidden_tag() }}
+            {{ oform.viewPastOrders(class="btn btn-outline-info") }}
+        </div>
+    </form>
+    <form method="POST" action="">
         {{ form.hidden_tag() }}
         <fieldset class="form-group">
             <legend class="border-bottom mb-4">Order Form</legend>

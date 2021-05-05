@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>My Orders</h2> <h6>Total Orders: {{ count }}</h6>
+
+{% for row in orders %}
+  <article class="media content-section">
+    <div class="media-body">
+      <div class="article-metadata">
+        <p class="mr-2">{{ row[0] }}</p>		  
+        <small class="text-muted">Quantity: {{ row[1] }}</small><br>
+        <small class="text-muted">Total Price: ${{ row[2] }}</small><br>
+      </div>
+    </div>
+  </article>
+{% endfor %}
+{% endblock content %}

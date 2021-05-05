@@ -3,10 +3,12 @@ import secrets
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, abort
 from flaskDemo import app, db, bcrypt
-from flaskDemo.forms import RegistrationForm, LoginForm, UpdateAccountForm, OrderForm, QAAssignForm, QAForm, ReviewsForm, AddReviewsForm, QADeleteForm
+from flaskDemo.forms import RegistrationForm, LoginForm, UpdateAccountForm, OrderForm, QAAssignForm, QAForm, ReviewsForm, AddReviewsForm, MyReviewsForm, QADeleteForm, OrderViewForm
 from flaskDemo.models import User, Order, Review, Orderline, Product, QA
 from flask_login import login_user, current_user, logout_user, login_required
 from datetime import datetime
+import mysql.connector
+from mysql.connector import Error
 
 
 @app.route("/")
@@ -65,8 +67,6 @@ def reviews():
 @login_required
 def myReviews():
     reviews = list()
-    import mysql.connector
-    from mysql.connector import Error
     try:
         conn = mysql.connector.connect(host='127.0.0.1',
                                        port=8889,
@@ -83,21 +83,23 @@ def myReviews():
         row = cursor.fetchone()
         count = row[0]
 
-        query = "select b.Description, a.Review, a.Rating, a.Review_date from Review_t a join Product_t as b on a.Product_id=b.Product_id where a.User_id=" + str(current_user.User_id)
+        query = "select b.Product_id, b.Description, a.Review, a.Rating, a.Review_date from Review_t a join Product_t as b on a.Product_id=b.Product_id where a.User_id=" + str(current_user.User_id)
         cursor.execute(query)
         rows = cursor.fetchall()
         results = len(rows)
-        if results > 0:
-            row = rows[0]
-            productID, review, rating, date = row[0], row[1], row[2], row[3]
-            reviews.append((productID, review, rating, date))
+        for row in rows:
+            productID, description, review, rating, date = row[0], row[1], row[2], row[3], row[4]
+            reviews.append((description, review, rating, date, productID))
+
     except Error as e:
         print(e)
  
     finally:
         conn.close()
 
-    return render_template('my_reviews.html', title="My Reviews", count=count, reviews=reviews)
+    form = MyReviewsForm()
+    return render_template('my_reviews.html', title="My Reviews", count=count, reviews=reviews, form=form)
+
 
 @app.route("/reviews/filter/<fil>", methods=['GET','POST'])
 def reviewsFilter(fil):
@@ -174,10 +176,13 @@ def order():
     for row in products.all():
         rowDict = row._asdict()
         selectList.append((rowDict['Product_id'], rowDict['Description']))
-    print(len(selectList))
+
     form = OrderForm()
     form.product.choices = selectList
-    if form.validate_on_submit():
+    oform = OrderViewForm()
+    if oform.viewPastOrders.data:
+        return redirect(url_for("myOrders"))
+    elif form.validate_on_submit():
         dateOrdered = datetime.utcnow()
         order = Order(User_id=current_user.User_id, Order_date=dateOrdered)
         db.session.add(order)
@@ -186,7 +191,33 @@ def order():
         db.session.add(orderline)
         db.session.commit()
         return redirect(url_for('home'))
-    return render_template('order.html', title="Order", form=form)
+    return render_template('order.html', title="Order", form=form, oform=oform)
+
+@app.route("/orders/my", methods=['GET'])
+@login_required
+def myOrders():
+    orderList = list()
+    try:
+        conn = mysql.connector.connect(host='127.0.0.1',
+                                       port=8889,
+                                       database='final_project',
+                                       user='jboyda',
+                                       password='comp453')
+        if conn.is_connected():
+            cursor = conn.cursor()
+        else:
+            return('problem')
+
+        query = "select b.Description, a.Quantity, (b.Price * a.Quantity) as TotalPrice from Orderline_t a join Product_t as b on a.Product_id=b.Product_id where a.Order_id in (select Order_id from Order_t where User_id=" + str(current_user.User_id) + ")"
+        cursor.execute(query)
+        rows = cursor.fetchall()
+        for row in rows:
+            orderList.append((row[0],row[1],row[2]))
+    finally:
+        conn.close()
+    orderCount = Order.query.filter_by(User_id=current_user.User_id).count()
+
+    return render_template('my_orders.html', title="My Orders", orders=orderList, count=orderCount)
 
 @app.route("/qa", methods=['GET','POST'])
 @login_required

@@ -68,7 +68,16 @@ class OrderForm(FlaskForm):
     quantity = IntegerField('Quantity', validators=[DataRequired()])
 
     submit = SubmitField('Place Order')
-    
+
+
+class OrderViewForm(FlaskForm):
+    viewPastOrders = SubmitField('View Past Orders')
+
+class MyReviewsForm(FlaskForm):
+    product_id = HiddenField('')
+    edit = SubmitField('Edit')
+    delete = SubmitField('Delete') 
+
 class ReviewsForm(FlaskForm):
     addReview = SubmitField('Add a Review')
     viewMyReviews = SubmitField('View My Reviews')
