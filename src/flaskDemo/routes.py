@@ -54,10 +54,50 @@ def reviews():
     if form.validate_on_submit():
         if form.addReview.data:
             return redirect(url_for('addReview'))
+        if form.viewMyReviews.data:
+            return redirect(url_for('myReviews'))
         if form.filterSubmit.data:
             return redirect(url_for('reviewsFilter',fil=form.filterBy.data))
         
     return render_template('reviews.html', title="Reviews", form=form, reviews=reviews)
+
+@app.route("/reviews/my", methods=['GET','POST'])
+@login_required
+def myReviews():
+    reviews = list()
+    import mysql.connector
+    from mysql.connector import Error
+    try:
+        conn = mysql.connector.connect(host='127.0.0.1',
+                                       port=8889,
+                                       database='final_project',
+                                       user='jboyda',
+                                       password='comp453')
+        if conn.is_connected():
+            cursor = conn.cursor()
+        else:
+            return('problem')
+        
+        countQuery = "select count(*) from Review_t where User_id=" + str(current_user.User_id)
+        cursor.execute(countQuery)
+        row = cursor.fetchone()
+        count = row[0]
+
+        query = "select b.Description, a.Review, a.Rating, a.Review_date from Review_t a join Product_t as b on a.Product_id=b.Product_id where a.User_id=" + str(current_user.User_id)
+        cursor.execute(query)
+        rows = cursor.fetchall()
+        results = len(rows)
+        if results > 0:
+            row = rows[0]
+            productID, review, rating, date = row[0], row[1], row[2], row[3]
+            reviews.append((productID, review, rating, date))
+    except Error as e:
+        print(e)
+ 
+    finally:
+        conn.close()
+
+    return render_template('my_reviews.html', title="My Reviews", count=count, reviews=reviews)
 
 @app.route("/reviews/filter/<fil>", methods=['GET','POST'])
 def reviewsFilter(fil):
@@ -85,7 +125,6 @@ def reviewsFilter(fil):
             .with_entities(Product.Description, Review.Rating, Review.Review, Review.Review_date)\
             .order_by(Product.Description)
 
-    print(reviewQuery)
     reviews = list()
     for row in reviewQuery.all():
         rowDict = row._asdict()
@@ -112,11 +151,12 @@ def addReview():
     form.product.choices = selectList
     
     if form.validate_on_submit():
-        review = Review(User_id=current_user.User_id,Product_id=form.product.data,Review=form.review.data,Rating=form.rating.data)
+        review = Review(User_id=current_user.User_id,Product_id=form.product.data,Review=form.review.data,Rating=form.rating.data,Review_date=datetime.utcnow())
         try:
             db.session.add(review)
             db.session.commit()
-        except:
+        except Exception as e:
+            print(e)
             db.session.rollback()
             db.session.flush()
             flash('Failed to create review. Please try again', 'danger')
@@ -134,6 +174,7 @@ def order():
     for row in products.all():
         rowDict = row._asdict()
         selectList.append((rowDict['Product_id'], rowDict['Description']))
+    print(len(selectList))
     form = OrderForm()
     form.product.choices = selectList
     if form.validate_on_submit():

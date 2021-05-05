@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>My Reviews ({{ count }})</h2>
+
+{% for row in reviews %}
+  <article class="media content-section">
+    <div class="media-body">
+      <div class="article-metadata">
+        <p class="mr-2">{{ row[0] }}</p>		  
+        <small class="text-muted">Rating: {{ row[1] }}/5</small><br>
+        <small class="text-muted">{{ row[2] }}</small><br>
+        <small class="text-muted font-italic">Posted: {{ row[3] }}</small>
+      </div>
+    </div>
+  </article>
+{% endfor %}
+{% endblock content %}

@@ -4,9 +4,14 @@
 <div class="content-section">
     <form method="POST" action="">
         {{ form.hidden_tag() }}
-        <div class="form-group">
-            {{ form.addReview(class="btn btn-outline-info") }}
-        </div>
+        {% if current_user.is_authenticated %}
+        <fieldset class="form-group">
+          <div class="form-group">
+              {{ form.addReview(class="btn btn-outline-info") }}
+              {{ form.viewMyReviews(class="btn btn-outline-info") }}
+          </div>
+        </fieldset>
+        {% endif %}
         <fieldset class="form-group">
           <div class="form-group">
               {{ form.filterBy.label(class="form-control-label") }}

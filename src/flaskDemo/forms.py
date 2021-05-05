@@ -71,6 +71,7 @@ class OrderForm(FlaskForm):
     
 class ReviewsForm(FlaskForm):
     addReview = SubmitField('Add a Review')
+    viewMyReviews = SubmitField('View My Reviews')
 
     filterBy = SelectField('Filter', coerce=int, choices=[(0,'Most Recent'),(1,'Lowest Rated to Highest'),(2,'Highest Rated to Lowest'),(3,'By Product Name')])
     filterSubmit = SubmitField('Refresh')
