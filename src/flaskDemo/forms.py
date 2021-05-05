@@ -95,6 +95,10 @@ class QAForm(FlaskForm):
     products = SelectField('Product', coerce=int)
     grade = RadioField('Grade', choices=[('pass','Pass'),('fail','Fail')], validators=[DataRequired()])
     submit = SubmitField('Grade')
+    
+class QADeleteForm(FlaskForm):
+    productsGraded = SelectField('Product', coerce=int)
+    submit2 = SubmitField('Delete')
 
 class UpdateAccountForm(FlaskForm):
     username = StringField('Username',

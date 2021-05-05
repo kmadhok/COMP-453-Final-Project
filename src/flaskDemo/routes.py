@@ -3,7 +3,7 @@ import secrets
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, abort
 from flaskDemo import app, db, bcrypt
-from flaskDemo.forms import RegistrationForm, LoginForm, UpdateAccountForm, OrderForm, QAAssignForm, QAForm, ReviewsForm, AddReviewsForm
+from flaskDemo.forms import RegistrationForm, LoginForm, UpdateAccountForm, OrderForm, QAAssignForm, QAForm, ReviewsForm, AddReviewsForm, QADeleteForm
 from flaskDemo.models import User, Order, Review, Orderline, Product, QA
 from flask_login import login_user, current_user, logout_user, login_required
 from datetime import datetime
@@ -217,13 +217,31 @@ def qa():
     for row in products.all():
         rowDict = row._asdict()
         reviewList.append((rowDict['Product_id'], rowDict['Description']))
+        
+    productsGraded = db.session.query(QA, Product)\
+        .select_from(QA)\
+        .join(Product, Product.Product_id == QA.Product_id)\
+        .with_entities(Product.Product_id, Product.Description)\
+        .filter(QA.User_id==current_user.User_id, QA.Rating.isnot(None))
+    reviewListGraded = list()
+    for row in productsGraded.all():
+        rowDict = row._asdict()
+        reviewListGraded.append((rowDict['Product_id'], rowDict['Description']))
+        
     form = QAForm()
     form.products.choices = reviewList
-    if aform.validate_on_submit():
-        return redirect(url_for('qaAssign', User_id=aform.employees.data, Product_id=aform.productAssign.data))
+    dform = QADeleteForm()
+    dform.productsGraded.choices = reviewListGraded
+    
+    
     if form.validate_on_submit():
         return redirect(url_for('qaGrade', User_id=current_user.User_id, Product_id=form.products.data, grade=form.grade.data))
-    return render_template('qa.html', title='Quality Assurance', isSupervisor=isSupervisor, aform=aform, form=form)
+    elif dform.validate_on_submit():
+        return redirect(url_for('qaDelete', User_id=current_user.User_id, Product_id=dform.productsGraded.data))
+    elif aform.validate_on_submit():
+        return redirect(url_for('qaAssign', User_id=aform.employees.data, Product_id=aform.productAssign.data))
+    return render_template('qa.html', title='Quality Assurance', isSupervisor=isSupervisor, aform=aform, form=form, dform=dform)
+    
 
 @app.route("/qa/assign/<User_id>/<Product_id>", methods=['GET','POST'])
 @login_required
@@ -253,6 +271,28 @@ def qaGrade(User_id, Product_id, grade):
 
     flash('Product graded successfully', 'success')
     return redirect(url_for('qa'))
+
+@app.route("/qa/delete/<User_id>/<Product_id>", methods=['GET','POST'])
+@login_required
+def qaDelete(User_id, Product_id):
+    failed = False
+    try:
+        qa = QA.query.filter_by(User_id=User_id,Product_id=Product_id).first()
+        db.session.delete(qa)
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        db.session.flush()
+        failed = True
+        print(e)
+    
+    if failed:
+        flash('Failed to delete assignment. Please try again', 'danger')
+        return redirect(url_for('qa'))
+
+    flash('Product grade deleted successfully', 'success')
+    return redirect(url_for('qa'))
+
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
