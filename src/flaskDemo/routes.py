@@ -248,16 +248,37 @@ def qa():
     for row in products.all():
         rowDict = row._asdict()
         reviewList.append((rowDict['Product_id'], rowDict['Description']))
-        
-    productsGraded = db.session.query(QA, Product)\
-        .select_from(QA)\
-        .join(Product, Product.Product_id == QA.Product_id)\
-        .with_entities(Product.Product_id, Product.Description)\
-        .filter(QA.User_id==current_user.User_id, QA.Rating.isnot(None))
+
     reviewListGraded = list()
-    for row in productsGraded.all():
-        rowDict = row._asdict()
-        reviewListGraded.append((rowDict['Product_id'], rowDict['Description']))
+    try:
+        conn = mysql.connector.connect(host='127.0.0.1',
+                                       port=8889,
+                                       database='final_project',
+                                       user='jboyda',
+                                       password='comp453')
+        if conn.is_connected():
+            cursor = conn.cursor()
+        else:
+            return('problem')
+
+        query = "select a.Product_id, b.Description from QA_t a join Product_t as b on a.Product_id=b.Product_id where a.User_id=" + str(current_user.User_id) + " and a.Rating is not null"
+        cursor.execute(query)
+        rows = cursor.fetchall()
+        for row in rows:
+            reviewListGraded.append((row[0], row[1]))
+
+    finally:
+        conn.close()    
+    
+    #productsGraded = db.session.query(QA, Product)\
+    #    .select_from(QA)\
+    #    .join(Product, Product.Product_id == QA.Product_id)\
+    #    .with_entities(Product.Product_id, Product.Description)\
+    #    .filter(QA.User_id==current_user.User_id, QA.Rating.isnot(None))
+    #reviewListGraded = list()
+    #for row in productsGraded.all():
+    #    rowDict = row._asdict()
+    #    reviewListGraded.append((rowDict['Product_id'], rowDict['Description']))
         
     form = QAForm()
     form.products.choices = reviewList
