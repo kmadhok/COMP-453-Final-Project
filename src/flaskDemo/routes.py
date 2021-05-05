@@ -270,16 +270,7 @@ def qa():
     finally:
         conn.close()    
     
-    #productsGraded = db.session.query(QA, Product)\
-    #    .select_from(QA)\
-    #    .join(Product, Product.Product_id == QA.Product_id)\
-    #    .with_entities(Product.Product_id, Product.Description)\
-    #    .filter(QA.User_id==current_user.User_id, QA.Rating.isnot(None))
-    #reviewListGraded = list()
-    #for row in productsGraded.all():
-    #    rowDict = row._asdict()
-    #    reviewListGraded.append((rowDict['Product_id'], rowDict['Description']))
-        
+    
     form = QAForm()
     form.products.choices = reviewList
     dform = QADeleteForm()
